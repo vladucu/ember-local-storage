@@ -9,9 +9,7 @@ const mergeTrees = require('broccoli-merge-trees');
 module.exports = {
   name: require('./package').name,
 
-  init(app) {
-    this._super.init && this._super.init.apply(this, arguments);
-
+  included: function included(app) {
     // determine if ember-data is present
     let checker = new VersionChecker(this);
     let npmDep = checker.for('ember-data', 'npm');
@@ -52,9 +50,7 @@ module.exports = {
         this.loadInitializer = options.loadInitializer;
       }
     }
-  },
 
-  included: function included(app) {
     if (this.needsFileExport) {
       app.import('vendor/save-as.js');
       app.import('vendor/Blob.js');
